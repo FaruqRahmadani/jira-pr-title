@@ -24,6 +24,8 @@ async function checkTitle(){
   if (regexpPRTitle.test(title)) {
     return true;
   }
+
+  core.error(`PR title does not match allowed JIRA tickets`);
   return false;
 }
 
@@ -68,16 +70,20 @@ async function removeLabel(octokit){
   const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
   const issue_number = github.context.issue.number;
 
-  core.info(`Removing label (${label_name}) from PR...`);
+  try {
+    core.info(`Removing label (${label_name}) from PR...`);
+    
+    await octokit.rest.issues.removeLabel({
+      owner,
+      repo,
+      issue_number,
+      name: label_name,
+    });
   
-  await octokit.rest.issues.removeLabel({
-    owner,
-    repo,
-    issue_number,
-    labels: [label_name],
-  });
-
-  core.info(`Removed label (${label_name}) from PR `);
+    core.info(`Removed label (${label_name}) from PR `);
+  } catch (error) {
+    core.error(`Failed to remove label (${label_name}) from PR`);
+  }
 }
 
 run();
