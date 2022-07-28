@@ -28,7 +28,7 @@ async function checkTitle(){
 }
 
 async function addLabel(octokit){
-  const label_name = core.getInput('LABEL_TITLE_FAILED');
+  const label_name = core.getInput('LABEL_NAME_FAILED');
   const label_color = core.getInput('LABEL_COLOR_FAILED');
 
   const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
@@ -63,7 +63,7 @@ async function addLabel(octokit){
 }
 
 async function removeLabel(octokit){
-  const label_name = core.getInput('LABEL_TITLE_FAILED');
+  const label_name = core.getInput('LABEL_NAME_FAILED');
 
   const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
   const issue_number = github.context.issue.number;

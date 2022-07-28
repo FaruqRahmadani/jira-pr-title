@@ -9078,7 +9078,7 @@ async function checkTitle(){
 }
 
 async function addLabel(octokit){
-  const label_name = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('LABEL_TITLE_FAILED');
+  const label_name = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('LABEL_NAME_FAILED');
   const label_color = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('LABEL_COLOR_FAILED');
 
   const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
@@ -9113,7 +9113,7 @@ async function addLabel(octokit){
 }
 
 async function removeLabel(octokit){
-  const label_name = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('LABEL_TITLE_FAILED');
+  const label_name = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('LABEL_NAME_FAILED');
 
   const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
   const issue_number = _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.issue.number;

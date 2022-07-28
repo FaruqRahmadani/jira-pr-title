@@ -10,15 +10,15 @@ inputs:
   ALLOWED_JIRA_TICKET:
     description: "prefix of jira ticket that allowed, separate with (,) if more than 1"
     required: true
-    default: "BDBC,BTBBA,BDSI"
+    default: 'BDBC,BTBBA,BDSI'
   LABEL_NAME_FAILED:
-    description: "is label name if checking is return failed"
+    description: 'is label name if checking is return failed'
     required: true
-    default: "PR Title is invalid"
+    default: 'PR Title is invalid'
   LABEL_COLOR_FAILED:
-    description: "is the color of label if failed"
+    description: 'is the color of label if failed'
     required: true
-    default: ""
+    default: '#D6493C'
 runs:
-  using: "node12"
+  using: "node18"
   main: "dist/index.js"
