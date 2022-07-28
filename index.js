@@ -38,9 +38,9 @@ async function addLabel(octokit){
     core.info(`Initialize label (${label_name})...`);
 
     await octokit.rest.issues.createLabel({
-      owner,
-      repo,
-      label_name,
+      owner: owner,
+      repo: repo,
+      name: label_name,
       color: label_color,
     });
 
@@ -77,7 +77,7 @@ async function removeLabel(octokit){
     labels: [label_name],
   });
 
-  core.info(`Removed label (${label_name}) to PR - ${addLabelResponse.status}`);
+  core.info(`Removed label (${label_name}) from PR `);
 }
 
 run();
