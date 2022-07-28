@@ -28,7 +28,8 @@ async function checkTitle(){
 }
 
 async function addLabel(octokit){
-  initLabel();
+  initLabel(octokit);
+  
   const label_name = core.getInput('LABEL_TITLE_FAILED');
 
   const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
