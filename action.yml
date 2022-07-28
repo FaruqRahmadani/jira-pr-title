@@ -1,0 +1,27 @@
+name: "Jira PR Title Checker"
+description: "Checks if the PR Title had Jira Ticket"
+branding:
+  icon: "tag"
+  color: "purple"
+on: [pull_request]
+inputs:
+  GITHUB_TOKEN:
+    required: true
+  pass_on_octokit_error:
+    description: "force CI to pass if an octokit error (e.g. missing GITHUB_TOKEN) occurs"
+    default: false
+  ALLOWED_JIRA_TICKET:
+    description: "prefix of jira ticket that allowed, separate with (,) if more than 1"
+    required: true
+    default: "BDBC,BTBBA,BDSI"
+  LABEL_NAME_FAILED:
+    description: "is label name if checking is return failed"
+    required: true
+    default: "PR Title is invalid"
+  LABEL_COLOR_FAILED:
+    description: "is the color of label if failed"
+    required: true
+    default: ""
+runs:
+  using: "node12"
+  main: "dist/index.js"
