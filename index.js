@@ -1,21 +1,38 @@
 import * as core from "@actions/core";
 import * as github from "@actions/github";
 
+let octokit;
+
 async function run(){
   const githubToken = core.getInput('GITHUB_TOKEN');
-  const octokit = github.getOctokit(githubToken)
+  octokit = github.getOctokit(githubToken)
   
   checkTitle().then(result => {
     if(result){
-      removeLabel(octokit);
+      removeLabel();
     }else{
-      addLabel(octokit);
+      addLabel();
     }
   })
 }
 
 async function checkTitle(){
   const title = github.context.payload.pull_request.title;
+  const labels = github.context.payload.pull_request.labels;
+
+
+  // skip checking for several label
+  const skipLabels = core.getInput('SKIP_LABEL_NAME');
+  const skipLabelsArray = skipLabels.split(",");
+  for (let i = 0; i < labels.length; i++) {
+    for (let j = 0; j < skipLabelsArray.length; j++) {
+      if (labels[i].name == skipLabelsArray[j]){
+        removeLabel();
+        return true;
+      }
+    }
+  }
+
   
   const allowedJiraTickets = core.getInput('ALLOWED_JIRA_TICKET');
   const allowedJiraTicketArray = allowedJiraTickets.split(',');
@@ -29,7 +46,7 @@ async function checkTitle(){
   return false;
 }
 
-async function addLabel(octokit){
+async function addLabel(){
   const label_name = core.getInput('LABEL_NAME_FAILED');
   const label_color = core.getInput('LABEL_COLOR_FAILED');
 
@@ -64,7 +81,7 @@ async function addLabel(octokit){
   core.info(`Added label (${label_name}) to PR - ${addLabelResponse.status}`);
 }
 
-async function removeLabel(octokit){
+async function removeLabel(){
   const label_name = core.getInput('LABEL_NAME_FAILED');
 
   const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");

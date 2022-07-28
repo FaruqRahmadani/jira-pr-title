@@ -9051,21 +9051,38 @@ __nccwpck_require__.r(__webpack_exports__);
 
 
 
+let octokit;
+
 async function run(){
   const githubToken = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('GITHUB_TOKEN');
-  const octokit = _actions_github__WEBPACK_IMPORTED_MODULE_1__.getOctokit(githubToken)
+  octokit = _actions_github__WEBPACK_IMPORTED_MODULE_1__.getOctokit(githubToken)
   
   checkTitle().then(result => {
     if(result){
-      removeLabel(octokit);
+      removeLabel();
     }else{
-      addLabel(octokit);
+      addLabel();
     }
   })
 }
 
 async function checkTitle(){
   const title = _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.payload.pull_request.title;
+  const labels = _actions_github__WEBPACK_IMPORTED_MODULE_1__.context.payload.pull_request.labels;
+
+
+  // skip checking for several label
+  const skipLabels = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('SKIP_LABEL_NAME');
+  const skipLabelsArray = skipLabels.split(",");
+  for (let i = 0; i < labels.length; i++) {
+    for (let j = 0; j < skipLabelsArray.length; j++) {
+      if (labels[i].name == skipLabelsArray[j]){
+        removeLabel();
+        return true;
+      }
+    }
+  }
+
   
   const allowedJiraTickets = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('ALLOWED_JIRA_TICKET');
   const allowedJiraTicketArray = allowedJiraTickets.split(',');
@@ -9079,7 +9096,7 @@ async function checkTitle(){
   return false;
 }
 
-async function addLabel(octokit){
+async function addLabel(){
   const label_name = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('LABEL_NAME_FAILED');
   const label_color = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('LABEL_COLOR_FAILED');
 
@@ -9114,7 +9131,7 @@ async function addLabel(octokit){
   _actions_core__WEBPACK_IMPORTED_MODULE_0__.info(`Added label (${label_name}) to PR - ${addLabelResponse.status}`);
 }
 
-async function removeLabel(octokit){
+async function removeLabel(){
   const label_name = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('LABEL_NAME_FAILED');
 
   const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");

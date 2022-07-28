@@ -11,6 +11,10 @@ inputs:
     description: "prefix of jira ticket that allowed, separate with (,) if more than 1"
     required: true
     default: 'BDBC,BTBBA,BDSI'
+  SKIP_LABEL_NAME:
+    description: "to ignore which label should be skip"
+    required: false
+    default: ''
   LABEL_NAME_FAILED:
     description: 'is label name if checking is return failed'
     required: true
