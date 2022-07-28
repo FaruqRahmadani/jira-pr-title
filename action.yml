@@ -18,7 +18,7 @@ inputs:
   LABEL_COLOR_FAILED:
     description: 'is the color of label if failed'
     required: true
-    default: '#D6493C'
+    default: 'D6493C'
 runs:
   using: "node16"
   main: "dist/index.js"
