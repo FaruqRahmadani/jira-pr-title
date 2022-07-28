@@ -9078,7 +9078,8 @@ async function checkTitle(){
 }
 
 async function addLabel(octokit){
-  initLabel();
+  initLabel(octokit);
+  
   const label_name = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('LABEL_TITLE_FAILED');
 
   const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
