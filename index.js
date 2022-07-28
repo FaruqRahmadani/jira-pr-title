@@ -28,12 +28,26 @@ async function checkTitle(){
 }
 
 async function addLabel(octokit){
-  initLabel(octokit);
-
   const label_name = core.getInput('LABEL_TITLE_FAILED');
+  const label_color = core.getInput('LABEL_COLOR_FAILED');
 
   const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
   const issue_number = github.context.issue.number;
+
+  try {
+    core.info(`Initialize label (${label_name})...`);
+
+    addLabelResponse = await octokit.rest.issues.createLabel({
+      owner,
+      repo,
+      label_name,
+      color: label_color,
+    });
+
+    core.info(`Finish initialize label (${label_name})`);
+  } catch (error) {
+    core.info(`Label (${label_name}) already created`);
+  }
 
 
   core.info(`Adding label (${label_name}) to PR...`);
@@ -64,24 +78,6 @@ async function removeLabel(octokit){
   });
 
   core.info(`Removed label (${label_name}) to PR - ${addLabelResponse.status}`);
-}
-
-async function initLabel(octokit){
-  const label_name = core.getInput('LABEL_TITLE_FAILED');
-  const label_color = core.getInput('LABEL_COLOR_FAILED');
-
-  const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
-
-  core.info(`Initialize label (${label_name})...`);
-  
-  addLabelResponse = await octokit.rest.issues.createLabel({
-    owner,
-    repo,
-    label_name,
-    color: label_color,
-  });
-
-  core.info(`Finish initialize label (${label_name})`);
 }
 
 run();
