@@ -68,9 +68,9 @@ async function removeLabel(octokit){
   const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
   const issue_number = github.context.issue.number;
 
-  core.info(`Removing label (${label_name}) to PR...`);
+  core.info(`Removing label (${label_name}) from PR...`);
   
-  await octokit.rest.issues.addLabels({
+  await octokit.rest.issues.removeLabel({
     owner,
     repo,
     issue_number,
