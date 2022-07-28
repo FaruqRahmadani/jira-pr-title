@@ -7,9 +7,6 @@ on: [pull_request]
 inputs:
   GITHUB_TOKEN:
     required: true
-  pass_on_octokit_error:
-    description: "force CI to pass if an octokit error (e.g. missing GITHUB_TOKEN) occurs"
-    default: false
   ALLOWED_JIRA_TICKET:
     description: "prefix of jira ticket that allowed, separate with (,) if more than 1"
     required: true
