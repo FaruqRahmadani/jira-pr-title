@@ -9079,7 +9079,7 @@ async function checkTitle(){
 
 async function addLabel(octokit){
   initLabel(octokit);
-  
+
   const label_name = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('LABEL_TITLE_FAILED');
 
   const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
@@ -9088,7 +9088,7 @@ async function addLabel(octokit){
 
   _actions_core__WEBPACK_IMPORTED_MODULE_0__.info(`Adding label (${label_name}) to PR...`);
   
-  addLabelResponse = await octokit.issues.addLabels({
+  addLabelResponse = await octokit.rest.issues.addLabels({
     owner,
     repo,
     issue_number,
@@ -9106,7 +9106,7 @@ async function removeLabel(octokit){
 
   _actions_core__WEBPACK_IMPORTED_MODULE_0__.info(`Removing label (${label_name}) to PR...`);
   
-  await octokit.issues.addLabels({
+  await octokit.rest.issues.addLabels({
     owner,
     repo,
     issue_number,
@@ -9124,7 +9124,7 @@ async function initLabel(octokit){
 
   _actions_core__WEBPACK_IMPORTED_MODULE_0__.info(`Initialize label (${label_name})...`);
   
-  addLabelResponse = await octokit.issues.createLabel({
+  addLabelResponse = await octokit.rest.issues.createLabel({
     owner,
     repo,
     label_name,
