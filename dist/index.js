@@ -9087,7 +9087,7 @@ async function addLabel(octokit){
   try {
     _actions_core__WEBPACK_IMPORTED_MODULE_0__.info(`Initialize label (${label_name})...`);
 
-    addLabelResponse = await octokit.rest.issues.createLabel({
+    await octokit.rest.issues.createLabel({
       owner,
       repo,
       label_name,
@@ -9102,7 +9102,7 @@ async function addLabel(octokit){
 
   _actions_core__WEBPACK_IMPORTED_MODULE_0__.info(`Adding label (${label_name}) to PR...`);
   
-  addLabelResponse = await octokit.rest.issues.addLabels({
+  let addLabelResponse = await octokit.rest.issues.addLabels({
     owner,
     repo,
     issue_number,

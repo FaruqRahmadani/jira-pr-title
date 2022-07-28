@@ -37,7 +37,7 @@ async function addLabel(octokit){
   try {
     core.info(`Initialize label (${label_name})...`);
 
-    addLabelResponse = await octokit.rest.issues.createLabel({
+    await octokit.rest.issues.createLabel({
       owner,
       repo,
       label_name,
@@ -52,7 +52,7 @@ async function addLabel(octokit){
 
   core.info(`Adding label (${label_name}) to PR...`);
   
-  addLabelResponse = await octokit.rest.issues.addLabels({
+  let addLabelResponse = await octokit.rest.issues.addLabels({
     owner,
     repo,
     issue_number,
