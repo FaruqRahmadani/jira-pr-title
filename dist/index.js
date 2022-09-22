@@ -9086,13 +9086,13 @@ async function checkTitle(){
   
   const allowedJiraTickets = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('ALLOWED_JIRA_TICKET');
   const allowedJiraTicketArray = allowedJiraTickets.split(',');
-  let regexpPRTitle = new RegExp(".*\\b("+allowedJiraTicketArray.join('|')+")\\b.\\d{0,}[0-9]", 'i');
+  let regexpPRTitle = new RegExp(".*\\b("+allowedJiraTicketArray.join('|')+")\\b.\\d{0,}[0-9].*", 'i');
 
   if (regexpPRTitle.test(title)) {
     return true;
   }
 
-  _actions_core__WEBPACK_IMPORTED_MODULE_0__.error(`PR title does not match allowed JIRA tickets`);
+  _actions_core__WEBPACK_IMPORTED_MODULE_0__.setFailed(`PR title does not match allowed JIRA tickets`);
   return false;
 }
 
